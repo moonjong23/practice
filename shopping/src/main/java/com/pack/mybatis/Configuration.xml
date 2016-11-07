@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ <typeAliases>
+ 	<typeAlias type="com.pack.model.login.UserDto" alias="userDto"/> 
+ 	<typeAlias type="com.pack.model.board.BoardDto" alias="boardDto"/>
+ 	<typeAlias type="com.pack.model.product.ProductDto" alias="productDto"/>
+ 	<typeAlias type="com.pack.model.wish.WishDto" alias="wishDto"/>
+ </typeAliases>
+ <mappers>
+  <mapper resource="com/pack/mybatis/DataMapper.xml" />
+ </mappers>
+</configuration>

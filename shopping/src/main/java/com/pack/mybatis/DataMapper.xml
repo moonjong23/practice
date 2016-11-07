@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pro">
+
+<!-- login -->
+<select id="userinfo" resultType="userDto" parameterType="String">
+	select userid,passwd,name from users where userid= #{userid}
+</select>
+
+<!-- board -->
+
+<select id="count" resultType="int">
+	select count(*)as count from board;
+</select>
+
+ <select id="board" resultType="boardDto" parameterType="map">
+  	select num,name,passwd,title,content,readcnt,gnum,onum,nested,substr(date,1,10) as date from board 
+  	order by gnum desc, onum asc limit #{startRow},#{endRow}
+ </select>
+
+<select id="board_maxnum" resultType="String">
+	select max(num) from board;
+</select>
+ 
+ <insert id="board_insert" parameterType="map">
+ 	insert into board(num,name,passwd,title,content) 
+ 	values(#{num}+1,#{name},#{passwd},#{title},#{content})
+ </insert>
+ 
+ <delete id="board_delete" parameterType="String">
+ 	delete from board where num = #{num}
+ </delete>
+ 
+ <!-- product -->
+ <select id="product" resultType="productDto">
+ 	select * from products order by no desc
+ </select>
+
+ <select id="detailform" resultType="productDto" parameterType="String">
+ 	select * from products where no = #{no}
+ </select>
+ 
+ <!-- wish -->
+ <select id="wish" resultType="wishDto" parameterType="String">
+ 	select products.`no`,name,price,su,imgsrc from wishlist 
+ 	join products on product_no = products.`no` 
+ 	where user_id = #{user_id}
+ </select>
+ 
+<insert id="wish_insert" parameterType="map">
+ 	insert into wishlist(user_id,product_no,su) values(#{user_id},#{product_no},#{su})
+ </insert>
+ 
+<update id="wish_update" parameterType="Map">
+ 	update wishlist set su = #{su} where user_id = #{user_id} and product_no = #{product_no}
+ </update>
+ 
+ <delete id="wish_delete">
+ 	delete from wishlist where product_no = #{product_no}
+ </delete>
+
+ 
+</mapper>
