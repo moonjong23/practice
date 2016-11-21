@@ -11,13 +11,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- board -->
 
-<select id="count" resultType="int">
-	select count(*)as count from board;
+<select id="count" resultType="int" parameterType="map">
+	select count(*) as count from board 
+	<where>
+		<if test="date !='' ">
+		<![CDATA[
+			date >= #{s_Date} and date < #{e_Date}  			
+		]]>
+		</if>
+	</where>
 </select>
 
  <select id="board" resultType="boardDto" parameterType="map">
   	select num,name,passwd,title,content,readcnt,gnum,onum,nested,substr(date,1,10) as date from board 
-  	order by gnum desc, onum asc limit #{startRow},#{endRow}
+	<where>
+		<if test="date !='' ">
+		<![CDATA[
+			date >= #{s_Date} and date < #{e_Date}  			
+		]]>
+		</if>
+	</where>  	
+  	order by num desc, gnum desc, onum asc limit ${startRow},${endRow}
  </select>
 
 <select id="board_maxnum" resultType="String">

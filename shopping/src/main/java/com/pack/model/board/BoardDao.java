@@ -19,10 +19,13 @@ public class BoardDao extends SqlSessionDaoSupport implements BoardDaoInter {
 	}
 	
 	@Override
-	public int boardCount() throws DataAccessException {
+	public int boardCount(String s_Date, String e_Date) throws DataAccessException {
 		int count = 0;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("s_Date", s_Date);
+		map.put("e_Date", e_Date);
 		try {
-			count = getSqlSession().selectOne("count");
+			count = getSqlSession().selectOne("count",map);
 		} catch (Exception e) {
 			System.out.println("count error: " + e);
 		}
@@ -30,10 +33,14 @@ public class BoardDao extends SqlSessionDaoSupport implements BoardDaoInter {
 	}
 
 	@Override
-	public List<BoardDto> getBoardlist(int startRow, int endRow) throws DataAccessException {
-		Map<String, Integer> map = new HashMap<String, Integer>();
+	public List<BoardDto> getBoardlist(int startRow1, int endRow1, String s_Date, String e_Date) throws DataAccessException {
+		Map<String, String> map = new HashMap<String, String>();
+		String startRow = Integer.toString(startRow1);
+		String endRow = Integer.toString(endRow1);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
+		map.put("s_Date", s_Date);
+		map.put("e_Date", e_Date);
 		return getSqlSession().selectList("board", map);
 	}
 	

@@ -8,9 +8,9 @@ import com.pack.model.login.UserDto;
 
 public interface BoardDaoInter {
 	
-	int boardCount() throws DataAccessException;
+	int boardCount(String s_Date, String e_Date) throws DataAccessException;
 	
-	List<BoardDto> getBoardlist(int startRow, int endRow) throws DataAccessException;
+	List<BoardDto> getBoardlist(int startRow, int endRow, String s_Date, String e_Date) throws DataAccessException;
 	
 	String getBoard_maxnum() throws DataAccessException;
 	
